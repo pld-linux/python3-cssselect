@@ -9,7 +9,7 @@ Summary:	Python moudle for parsing CSS3 Selectors and translating them to XPath 
 Summary(pl.UTF-8):	Moduł pythona interpretujący selektory CSS i tłumaczący je na wyrażenia XPath 1.0
 Name:		python-%{module}
 Version:	0.9.1
-Release:	1
+Release:	2
 License:	BSD
 Group:		Development/Languages/Python
 Source0:	http://pypi.python.org/packages/source/c/%{module}/%{module}-%{version}.tar.gz
