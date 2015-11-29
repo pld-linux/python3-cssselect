@@ -16,7 +16,7 @@ Source0:	http://pypi.python.org/packages/source/c/%{module}/%{module}-%{version}
 # Source0-md5:	c74f45966277dc7a0f768b9b0f3522ac
 URL:		http://packages.python.org/cssselect/
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-devel
 BuildRequires:	python-distribute
