@@ -6,8 +6,8 @@
 %bcond_without	python3	# CPython 3.x module
 #
 %define 	module	cssselect
-Summary:	Python moudle for parsing CSS3 Selectors and translating them to XPath 1.0 expressions
-Summary(pl.UTF-8):	Moduł pythona interpretujący selektory CSS i tłumaczący je na wyrażenia XPath 1.0
+Summary:	Python module for parsing CSS3 Selectors and translating them to XPath 1.0 expressions
+Summary(pl.UTF-8):	Moduł Pythona interpretujący selektory CSS i tłumaczący je na wyrażenia XPath 1.0
 Name:		python-%{module}
 Version:	1.1.0
 Release:	2
@@ -55,8 +55,8 @@ Ten moduł był częścią lxml jako lxml.cssselect zanim został wydzielony
 jako osobny projekt.
 
 %package -n python3-%{module}
-Summary:	Python moudle for parsing CSS3 Selectors and translating them to XPath 1.0 expressions
-Summary(pl.UTF-8):	Moduł pythona interpretujący selektory CSS i tłumaczący je na wyrażenia XPath 1.0
+Summary:	Python module for parsing CSS3 Selectors and translating them to XPath 1.0 expressions
+Summary(pl.UTF-8):	Moduł Pythona interpretujący selektory CSS i tłumaczący je na wyrażenia XPath 1.0
 Group:		Libraries/Python
 Requires:	python3-modules >= 1:3.4
 
