@@ -1,42 +1,32 @@
 #
 # Conditional build:
 %bcond_without	doc	# Sphinx documentation
-%bcond_with	tests	# unit tests [tests missing in archive as of 1.0.3]
-%bcond_without	python2	# CPython 2.x module
-%bcond_without	python3	# CPython 3.x module
+%bcond_without	tests	# unit tests
 #
-%define 	module	cssselect
+%define		module	cssselect
 Summary:	Python module for parsing CSS3 Selectors and translating them to XPath 1.0 expressions
 Summary(pl.UTF-8):	Moduł Pythona interpretujący selektory CSS i tłumaczący je na wyrażenia XPath 1.0
-Name:		python-%{module}
-Version:	1.1.0
-Release:	7
+Name:		python3-%{module}
+Version:	1.3.0
+Release:	1
 License:	BSD
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/cssselect/
 Source0:	https://files.pythonhosted.org/packages/source/c/cssselect/%{module}-%{version}.tar.gz
-# Source0-md5:	fa57704c1cb66cc8e537b782bd6b227e
+# Source0-md5:	e0148abb13430399cbdbc173c3fa1c80
 URL:		http://packages.python.org/cssselect/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
-%if %{with python2}
-BuildRequires:	python-devel >= 1:2.7
-BuildRequires:	python-setuptools
-%if %{with tests}
-BuildRequires:	python-lxml
-%endif
-%endif
-%if %{with python3}
-BuildRequires:	python3-devel >= 1:3.4
+BuildRequires:	python3-devel >= 1:3.9
 BuildRequires:	python3-setuptools
 %if %{with tests}
 BuildRequires:	python3-lxml
 %endif
-%endif
 %if %{with doc}
+BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg
 %endif
-Requires:	python-modules >= 1:2.7
+Requires:	python3-modules >= 1:3.9
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,26 +38,6 @@ module used to live inside of lxml as lxml.cssselect before it was
 extracted as a stand-alone project.
 
 %description -l pl.UTF-8
-cssselect interpretuje selektory CSS3 i tłumaczy je na wyrażenia XPath
-1.0. Owe wyreażenia mogą być później użyte w lxml lub w innym kodzie
-XPath do znajdywania pasujących elementów w dokumentach XML lub HTML.
-Ten moduł był częścią lxml jako lxml.cssselect zanim został wydzielony
-jako osobny projekt.
-
-%package -n python3-%{module}
-Summary:	Python module for parsing CSS3 Selectors and translating them to XPath 1.0 expressions
-Summary(pl.UTF-8):	Moduł Pythona interpretujący selektory CSS i tłumaczący je na wyrażenia XPath 1.0
-Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.4
-
-%description -n python3-%{module}
-cssselect parses CSS3 Selectors and translate them to XPath 1.0
-expressions. Such expressions can be used in lxml or another XPath
-engine to find the matching elements in an XML or HTML document. This
-module used to live inside of lxml as lxml.cssselect before it was
-extracted as a stand-alone project.
-
-%description -n python3-%{module} -l pl.UTF-8
 cssselect interpretuje selektory CSS3 i tłumaczy je na wyrażenia XPath
 1.0. Owe wyreażenia mogą być później użyte w lxml lub w innym kodzie
 XPath do znajdywania pasujących elementów w dokumentach XML lub HTML.
@@ -89,13 +59,7 @@ Dokumentacja API modułu Pythona cssselect.
 %setup -q -n %{module}-%{version}
 
 %build
-%if %{with python2}
-%py_build %{?with_tests:test}
-%endif
-
-%if %{with python3}
 %py3_build %{?with_tests:test}
-%endif
 
 %if %{with doc}
 # no Makefile...
@@ -107,34 +71,16 @@ sphinx-build -b html . _build/html
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%if %{with python2}
-%py_install
-
-%py_postclean
-%endif
-
-%if %{with python3}
 %py3_install
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if %{with python2}
 %files
-%defattr(644,root,root,755)
-%doc AUTHORS CHANGES LICENSE README.rst
-%{py_sitescriptdir}/cssselect
-%{py_sitescriptdir}/cssselect-%{version}-py*.egg-info
-%endif
-
-%if %{with python3}
-%files -n python3-%{module}
 %defattr(644,root,root,755)
 %doc AUTHORS CHANGES LICENSE README.rst
 %{py3_sitescriptdir}/cssselect
 %{py3_sitescriptdir}/cssselect-%{version}-py*.egg-info
-%endif
 
 %if %{with doc}
 %files apidocs
