@@ -15,13 +15,14 @@ Group:		Development/Languages/Python
 Source0:	https://files.pythonhosted.org/packages/source/c/cssselect/%{module}-%{version}.tar.gz
 # Source0-md5:	e0148abb13430399cbdbc173c3fa1c80
 URL:		http://packages.python.org/cssselect/
-BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	python3-devel >= 1:3.9
 BuildRequires:	python3-setuptools
 %if %{with tests}
-BuildRequires:	python3-lxml
+BuildRequires:	python3-lxml >= 4.4
+BuildRequires:	python3-pytest >= 5.4
 %endif
+BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with doc}
 BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg
@@ -59,13 +60,17 @@ Dokumentacja API modułu Pythona cssselect.
 %setup -q -n %{module}-%{version}
 
 %build
-%py3_build %{?with_tests:test}
+%py3_build
+
+%if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTHONPATH=$(pwd) \
+%{__python3} -m pytest tests
+%endif
 
 %if %{with doc}
-# no Makefile...
-cd docs
-PYTHONPATH=$(pwd)/.. \
-sphinx-build -b html . _build/html
+PYTHONPATH=$(pwd) \
+sphinx-build -b html docs docs/_build/html
 %endif
 
 %install
